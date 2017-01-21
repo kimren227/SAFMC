@@ -34,6 +34,8 @@ class Classifier():
         _,mask = self.classify(frame)
         # cv2.imshow("mask",mask)
         contours, hier = cv2.findContours(mask,cv2.RETR_EXTERNAL,cv2.CHAIN_APPROX_SIMPLE)
+        if(contours==None):
+            return None
         c = max(contours, key=cv2.contourArea)
         (x, y), radius = cv2.minEnclosingCircle(c)
         center = (int(x),int(y))
@@ -51,8 +53,12 @@ if __name__ == "__main__":
     cv2.namedWindow("frame")
     for i in xrange(2000):
         frame = camera.getFrame()
-        center, radius = classifier.findLocation(frame)
+        circle = classifier.findLocation(frame)
+        if(circle == None):
+            continue
+        center, radius = circle
         cv2.circle(frame, center, radius,(0,255,0),2)
+        exception
     cv2.destroyAllWindows()
 
 
