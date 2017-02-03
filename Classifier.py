@@ -16,7 +16,9 @@ class Classifier():
             cv2.circle(cimg,(i[0],i[1]),2,(0,0,255),3)
             cv2.imwrite('detected circles.jpg',cimg)
             print(i[0],i[1])
-            return (i[0],i[1])
+            center = (i[0],i[1])
+            radius = i[2]
+            return (center,radius)
     def classify(self,frame):
         # start = time.time()
         # remove high frequence noise
