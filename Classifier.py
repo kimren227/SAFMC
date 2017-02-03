@@ -5,6 +5,18 @@ import time
 class Classifier():
     def __init__(self):
         type = 0
+    def findLanding(self,frame):
+        img = cv2.imread('chopper_landing_pad.jpg',0)
+        img = cv2.medianBlur(img,5)
+        cimg = cv2.cvtColor(img,cv2.COLOR_GRAY2BGR)
+        circles = cv2.HoughCircles(img,cv2.cv.CV_HOUGH_GRADIENT,2,20,param1=300,param2=200,minRadius=0,maxRadius=0)
+        circles = np.uint16(np.around(circles))
+        for i in circles[0,:]:
+            cv2.circle(cimg,(i[0],i[1]),i[2],(0,255,0),2)
+            cv2.circle(cimg,(i[0],i[1]),2,(0,0,255),3)
+            cv2.imwrite('detected circles.jpg',cimg)
+            print(i[0],i[1])
+            return (i[0],i[1])
     def classify(self,frame):
         # start = time.time()
         # remove high frequence noise
